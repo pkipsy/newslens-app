@@ -1,0 +1,4 @@
+/.ipynb_checkpoints/*
+.Rapp.history
+keysecret.py
+/__pycache__/*
