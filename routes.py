@@ -11,6 +11,7 @@ import os
 
 app = Flask(__name__, instance_path=keys['path'])
 app.config['SECRET_KEY'] = keys['secret']
+app.run(host='0.0.0.0', debug=True)
 
 bootstrap = Bootstrap(app)
 moment = Moment(app)
