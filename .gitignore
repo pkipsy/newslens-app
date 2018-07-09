@@ -2,3 +2,4 @@
 .Rapp.history
 keysecret.py
 /__pycache__/*
+/app_folder/__pycache__/*
