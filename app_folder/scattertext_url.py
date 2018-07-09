@@ -12,6 +12,7 @@ from app_folder.sandbox import InputModel, OutputModel, News
 # import scattertext modules
 import scattertext as st
 import re, io
+import random
 from pprint import pprint
 import pandas as pd
 import numpy as np
@@ -127,7 +128,10 @@ class Viz(News):
                                     metadata=convention_df['position'],
                                     term_significance = st.LogOddsRatioUninformativeDirichletPrior())
 
-      file_name = 'templates/scattertext.html'
-      open(file_name, 'wb').write(html.encode('utf-8'))
 
-      return html
+      rand = str(random.randint(1,1000))
+      file_name = 'scattertext_'+rand
+      file_loc = '/home/ubuntu/application/app_folder/templates/'+file_name+'.html'
+      open(file_loc, 'wb').write(html.encode('utf-8'))
+
+      return file_name

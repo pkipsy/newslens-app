@@ -42,20 +42,13 @@ class GetBias(InputModel):
         img_url = ''
 
         # load source bias data from all sides
-        with open('allsides-media-bias-ratings.csv', mode='r') as infile:
+        with open('/home/ubuntu/application/app_folder/allsides-media-bias-ratings.csv', mode='r') as infile:
             reader = csv.reader(infile)
             bias_dict = dict((rows[0],rows[1]) for rows in reader)
 
             # load source information from url
             the_source = self.source()
             new_source = the_source.split('.')[1]
-
-            # create boilerplate stop list
-            #remove_list = ['http://', 'https://', 'www', 'www1', 'com', 'org', 'net', 'int', 'edu' 'gov', 'mil', 'beta', 'eu', 'co', 'uk', 'europe', 'gma', 'blogs', 'in', 'm', 'eclipse2017', 'money']
-
-            #for seq in remove_list:
-                    #if seq in the_source:
-                        #new_source=the_source.replace(seq,"")
 
             # using fuzzy match, find the All Sides source that best matches the input url
             mapping = []
@@ -146,34 +139,13 @@ class News(InputModel, OutputModel):
     # assess news source bias with all sides ratings
     def match_bias(self):
         # load source bias data from all sides
-        with open('allsides-media-bias-ratings.csv', mode='r') as infile:
+        with open('/home/ubuntu/application/app_folder/allsides-media-bias-ratings.csv', mode='r') as infile:
             reader = csv.reader(infile)
             bias_dict = dict((rows[0],rows[1]) for rows in reader)
 
             # calculate the match between source names, add highest matches to mapping dict
             sim_articles = self.store_news()
             mapping = {}
-
-            for new_source in sim_articles['source']:
-                for listed_source in bias_dict:
-                    match = fuzz.token_set_ratio(listed_source, new_source)
-
-                    '''
-                    if there is a strong match, create a link in the dictionary
-                    if the dictionary already has an entry, only replace it if this match is stronger
-                    if the match < 64, list the source bias as "uncertain"
-                    '''
-
-                    if match > 65:
-                        if new_source not in mapping:
-                            mapping[new_source] = [match, listed_source, bias_dict[listed_source]]
-                        elif match > mapping[new_source][0]:
-                            mapping[new_source] = [match, listed_source, bias_dict[listed_source]]
-                    else:
-                        if new_source not in mapping:
-                            mapping[new_source] = [match, listed_source, 'Uncertain']
-                        elif match > mapping[new_source][0]:
-                            mapping[new_source] = [match, listed_source, 'Uncertain']
 
         return mapping
 
