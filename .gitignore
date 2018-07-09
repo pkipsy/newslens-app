@@ -1,5 +1,6 @@
 /.ipynb_checkpoints/*
 .Rapp.history
 keysecret.py
-/__pycache__/*
+__pycache__/*
 /app_folder/__pycache__/*
+.pyc*

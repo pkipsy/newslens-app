@@ -3,7 +3,7 @@
 # !pip3 install python-Levenshtein
 
 # key info
-from keysecret import keys
+from app_folder.keysecret import keys
 key_info = keys['info']
 
 # imports

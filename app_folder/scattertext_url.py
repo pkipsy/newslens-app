@@ -7,7 +7,7 @@
 # !pip install future
 
 # imports url transformer to analyze input url and get a recommended article
-from sandbox import InputModel, OutputModel, News
+from app_folder.sandbox import InputModel, OutputModel, News
 
 # import scattertext modules
 import scattertext as st

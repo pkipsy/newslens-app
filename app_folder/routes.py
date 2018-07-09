@@ -4,13 +4,12 @@ from flask_moment import Moment
 from flask_wtf import FlaskForm
 from wtforms import Form, StringField, SubmitField, SelectField
 from wtforms.validators import InputRequired,ValidationError
+import os
 
 from app_folder import app
-from keysecret import keys
-from sandbox import *
-from scattertext_url import *
-
-import os
+from app_folder.keysecret import keys
+from app_folder.sandbox import *
+from app_folder.scattertext_url import *
 
 bootstrap = Bootstrap(app)
 moment = Moment(app)
