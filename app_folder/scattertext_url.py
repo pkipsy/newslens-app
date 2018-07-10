@@ -128,10 +128,7 @@ class Viz(News):
                                     metadata=convention_df['position'],
                                     term_significance = st.LogOddsRatioUninformativeDirichletPrior())
 
-
-      rand = str(random.randint(1,1000))
-      file_name = 'scattertext_'+rand
-      file_loc = '/home/ubuntu/application/app_folder/templates/'+file_name+'.html'
-      open(file_loc, 'wb').write(html.encode('utf-8'))
+      file_name = '/home/ubuntu/application/app_folder/static/scattertext.html'
+      open(file_name, 'wb').write(html.encode('utf-8'))
 
       return file_name
