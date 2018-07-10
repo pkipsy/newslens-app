@@ -4,6 +4,8 @@
 {% block title %}News Lens{% endblock %}
 
 {% block page_content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
 <div class="page-header">
     <h1>News Lens v 0.1</h1>
     <h2>Identifying Bias in News Media</h2>
@@ -11,38 +13,21 @@
     <br>
 </div>
 
-Select a recent news story:
+Enter a <b>news link</b> in the form below.<br><br>
+Click one of the <b>story buttons</b> to copy its link to clipboard:
 
-<a href="#" id="1" class="btn" onclick="reply_click(this.id)" style="text-decoration: none">Declassified Cold War Footage</a>
-|
-<a href="#" id="2" class="btn" onclick="reply_click(this.id)" style="text-decoration: none">Supreme Court Partisan Redistricting</a>
-|
-<a href="#" id="3" class="btn" onclick="reply_click(this.id)" style="text-decoration: none">UN Human Rights Council</a>
-<br>
-Or, enter your own link.
+<p2 id="p1" style="color:transparent; font-size:0;">http://www.foxnews.com/tech/2018/07/09/never-before-seen-cold-war-videos-declassified.html</p2>
+<p2 id="p2" style="color:transparent; font-size:0;">https://www.economist.com/democracy-in-america/2018/06/19/the-supreme-court-dodges-big-decisions-on-partisan-redistricting</p2>
+<p2 id="p3" style="color:transparent; font-size:0;">http://www.foxnews.com/politics/2018/06/28/dem-congresswoman-among-anti-trump-protesters-arrested-inside-capitol-office-building.html</p2>
+<p2 id="p4" style="color:transparent; font-size:0;">http://www.foxnews.com/politics/2018/06/20/white-house-considering-executive-action-to-prevent-family-separations-at-border.html</p2>
+
+<button onclick="copyToClipboard('#p1')"><font color="#297EAF">Declassified Cold War</font></button>
+<button onclick="copyToClipboard('#p2')"><font color="#297EAF">Partisan Redistricting</font></button>
+<button onclick="copyToClipboard('#p3')"><font color="#297EAF">Congresswoman Arrested</font></button>
+<button onclick="copyToClipboard('#p4')"><font color="#297EAF">Immigration Order</font></button>
+
+    <script  src="static/js/index.js"></script>
 
 {{ wtf.quick_form(form) }}
-
-<script type="text/javascript">
-
-    function reply_click(clicked_id)
-    {
-        if(clicked_id == "1")
-        {
-            document.getElementById('product_name').value = 'http://www.foxnews.com/tech/2018/07/09/never-before-seen-cold-war-videos-declassified.html';
-        }
-
-        if(clicked_id == "2")
-        {
-            document.getElementById('product_name').value = 'https://www.economist.com/democracy-in-america/2018/06/19/the-supreme-court-dodges-big-decisions-on-partisan-redistricting';
-        }
-
-                if(clicked_id == "3")
-        {
-            document.getElementById('product_name').value = 'http://www.foxnews.com/politics/2018/06/19/trump-administration-withdrawing-from-un-human-rights-council.html';
-        }
-    }
-
-</script>
 
 {% endblock %}
