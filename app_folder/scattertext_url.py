@@ -9,6 +9,10 @@
 # imports url transformer to analyze input url and get a recommended article
 from app_folder.sandbox import InputModel, OutputModel, News
 
+# key info
+from app_folder.keysecret import keys
+key_path = keys['path']
+
 # import scattertext modules
 import scattertext as st
 import re, io
@@ -128,7 +132,7 @@ class Viz(News):
                                     metadata=convention_df['position'],
                                     term_significance = st.LogOddsRatioUninformativeDirichletPrior())
 
-      file_name = '/home/ubuntu/application/app_folder/static/scattertext.html'
+      file_name = key_path + '/templates/scattertext.html'
       open(file_name, 'wb').write(html.encode('utf-8'))
 
       return file_name

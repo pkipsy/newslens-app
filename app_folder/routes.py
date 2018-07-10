@@ -96,9 +96,9 @@ def results():
 def data():
     return render_template('data.html')
 
-#@app.route('/scattertext')
-#def scatter():
-#    return render_template('scattertext.html')
+@app.route('/scattertext')
+def scatter():
+    return render_template('scattertext.html')
 
 @app.errorhandler(404)
 def page_not_found(e):

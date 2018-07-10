@@ -5,6 +5,7 @@
 # key info
 from app_folder.keysecret import keys
 key_info = keys['info']
+key_path = keys['path']
 
 # imports
 from newsplease import NewsPlease
@@ -42,7 +43,8 @@ class GetBias(InputModel):
         img_url = ''
 
         # load source bias data from all sides
-        with open('/home/ubuntu/application/app_folder/allsides-media-bias-ratings.csv', mode='r') as infile:
+        all_sides = key_path + 'allsides-media-bias-ratings.csv'
+        with open(all_sides, mode='r') as infile:
             reader = csv.reader(infile)
             bias_dict = dict((rows[0],rows[1]) for rows in reader)
 
@@ -60,24 +62,6 @@ class GetBias(InputModel):
                         mapping = [match, listed_source, bias_dict[listed_source]]
                     elif match > mapping[0]:
                         mapping = [match, listed_source, bias_dict[listed_source]]
-
-            # if a match was found, select image corresponding to source bias
-            if len(mapping) != 0:
-                Left = ['Lean Left', 'Left']
-                Right = ['Lean Right', 'Right']
-                Center = ['Center']
-
-                if mapping[2] in Left:
-                    img_url='https://raw.githubusercontent.com/pkipsy/news-lens/master/Flask-App/graphics/left.jpg?raw=true'
-                elif mapping[2] in Right:
-                    img_url='https://raw.githubusercontent.com/pkipsy/news-lens/master/Flask-App/graphics/right.jpg?raw=true'
-                elif mapping[2] in Center:
-                    img_url='https://raw.githubusercontent.com/pkipsy/news-lens/master/Flask-App/graphics/center.jpg?raw=true'
-
-            #info = {the_source: mapping}
-            else:
-                img_url='https://raw.githubusercontent.com/pkipsy/news-lens/master/Flask-App/graphics/uncertain.jpg?raw=true'
-                #info = {the_source: 'Uncertain'}
 
         return mapping[2]
 
@@ -139,7 +123,8 @@ class News(InputModel, OutputModel):
     # assess news source bias with all sides ratings
     def match_bias(self):
         # load source bias data from all sides
-        with open('/home/ubuntu/application/app_folder/allsides-media-bias-ratings.csv', mode='r') as infile:
+        all_sides = key_path + 'allsides-media-bias-ratings.csv'
+        with open(all_sides, mode='r') as infile:
             reader = csv.reader(infile)
             bias_dict = dict((rows[0],rows[1]) for rows in reader)
 
