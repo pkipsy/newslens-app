@@ -16,6 +16,7 @@ key_path = keys['path']
 # import scattertext modules
 import scattertext as st
 import re, io
+import random
 from pprint import pprint
 import pandas as pd
 import numpy as np
@@ -27,7 +28,6 @@ from scattertext import CorpusFromPandas, produce_scattertext_explorer
 nlp = spacy.load('en')
 
 # import text processing modules
-from newspaper import Article
 import nltk
 nltk.download('stopwords')
 from nltk.corpus import stopwords
@@ -38,49 +38,22 @@ class Viz(News):
     def __init__(self, url):
         News.__init__(self, url)
 
-    def get_links(self):
-      # load urls of top recommended articles
-      rec_article = self.choose_news()['url']
-      return rec_article
-
-    def good_links(self):
-      # find one good working link
-      for link in self.get_links():
-        try:
-          rec_get = Article(link)
-          rec_get.download()
-          rec_get.parse()
-          return link
-        except:
-          pass
-
-    def extract_art(self):
-      # load functional link
-      working_link = self.good_links()
-
-      # extract information
-      rec_get = Article(working_link)
-      rec_get.download()
-      rec_get.parse()
-      rec_text = rec_get.text
-      rec_text = rec_text.split('\n')
-      rec_text = [t for t in rec_text if len(t) > 0]
-
-      return rec_text
-
     def get_texts(self):
       '''
-      load text of input url & first recommended article
+      get text of input url & first recommended article
       write to dataframe with bias information
       '''
 
-      # load text of user input article
+      # load text of user input
       user_input = self.text()
       user_input = user_input.split('\n')
-      user_input = [t for t in user_input if len(t) > 0]
 
-      # load text of first recommended article
-      rec_text = self.extract_art()
+      # load text of top recommended article
+      rec_article = self.choose_news()
+      rec_url = rec_article['url'][0]
+      # rec_text = OutputModel(rec_url).article.text
+      rec_text = InputModel(rec_url).text()
+      rec_text = rec_text.split('\n')
 
       # create dataframe
       text = user_input + rec_text

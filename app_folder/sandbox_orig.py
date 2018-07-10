@@ -1,7 +1,6 @@
 # !pip3 install news-please
 # !pip3 install fuzzywuzzy
 # !pip3 install python-Levenshtein
-# !pip3 install newspaper3k
 
 # key info
 from app_folder.keysecret import keys
@@ -10,7 +9,6 @@ key_path = keys['path']
 
 # imports
 from newsplease import NewsPlease
-from newspaper import Article
 import string
 import re
 import requests
@@ -26,18 +24,11 @@ class InputModel:
     def __init__(self, url):
         self.article = NewsPlease.from_url(url)
 
-        self.content = Article(url)
-        self.content.download()
-        self.content.parse()
-
     def title(self):
-        return self.content.title
-
-    def text(self):
-        return self.content.text
+        return self.article.title
 
     def image(self):
-        return self.content.top_image
+        return self.article.image_url
 
     def source(self):
         return self.article.source_domain
@@ -86,19 +77,16 @@ class GetBias(InputModel):
             else:
                 return 'Uncertain'
 
-class OutputModel(InputModel):
+class OutputModel:
     """ Yields scraped data about the input url """
 
     def __init__(self, url):
-        InputModel.__init__(self, url)
+        self.article = NewsPlease.from_url(url)
 
     # given URL, extract & clean article information from NewsPlease
     def process(self):
         # reduce article size
-        if self.title() != None:
-          input_text = self.title()+" "+self.text()[0:200]
-        else:
-          input_text = self.text()[0:200]
+        input_text = self.article.title+" "+self.article.text[0:200]
 
         # clean article text
         input_text = input_text.replace('\n',' ')
@@ -110,9 +98,10 @@ class OutputModel(InputModel):
 
         return(unicode_line)
 
-class News(OutputModel):
+class News(InputModel, OutputModel):
 
     def __init__(self, url):
+        InputModel.__init__(self, url)
         OutputModel.__init__(self, url)
 
     # gather similar articles from Lateral
