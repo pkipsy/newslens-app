@@ -1,4 +1,4 @@
-# newslens-app
+# NewsLens Web Application
 
 <p align="center"><img src="https://github.com/pkipsy/news-lens/blob/master/docs/images/newslens.png?raw=true" width=75%></p>
 
